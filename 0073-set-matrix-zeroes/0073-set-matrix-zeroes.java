@@ -1,27 +1,35 @@
 class Solution {
     public void setZeroes(int[][] matrix) {
-    
-        Set<Integer> rowIndex = new HashSet<>();
-        Set<Integer> columnIndex = new HashSet<>();
-        int columns= matrix.length;
-        int rows = matrix[0].length;
-        for(int i =0; i<columns; i++) {
-            for(int j=0; j<rows; j++) {
-                if(matrix[i][j]== 0) {
-                  rowIndex.add(i);
-                  columnIndex.add(j);
+       int rows = matrix.length;
+       int columns = matrix[0].length;
+
+       boolean isZeroInFirstCol= false;
+
+       for(int i=0; i<rows; i++) {
+           if(matrix[i][0] == 0)
+             isZeroInFirstCol = true;
+
+           for(int j=1; j<columns; j++) {
+                if(matrix[i][j] == 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0; 
                 }
-            }
-        }
+           }    
+       }
 
-        for(int i =0; i<columns; i++) {
-            for(int j=0; j<rows; j++) {
-                if(rowIndex.contains(i)|| columnIndex.contains(j))
-                   matrix[i][j] = 0;
-            }
+       for(int i=rows-1; i>=0; i--) {
+        for(int j=columns-1; j>=1; j--){
+            if(matrix[i][0] == 0 || matrix[0][j] == 0)
+                matrix[i][j]=0;
         }
-      
+       }
+
+       if(isZeroInFirstCol) {
+        for(int i=0; i<rows; i++){
+            matrix[i][0] = 0;
+        }
+       }
+
     }
-
 
 }
